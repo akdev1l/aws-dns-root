@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 import 'source-map-support/register';
 import * as cdk from 'aws-cdk-lib';
-import { AwsDnsRootStack } from '../lib/aws-dns-root-stack';
+import { DnsRootStack } from '../lib/dns-root-stack';
 
 const app = new cdk.App();
-new AwsDnsRootStack(app, 'AwsDnsRootStack', {
+new DnsRootStack(app, 'DnsRootStack', {
   /* If you don't specify 'env', this stack will be environment-agnostic.
    * Account/Region-dependent features and context lookups will not work,
    * but a single synthesized template can be deployed anywhere. */

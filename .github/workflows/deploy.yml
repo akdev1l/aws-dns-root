@@ -1,0 +1,33 @@
+name: Deploy AWS Infrastructure
+
+permissions:
+ id-token: write # Required for GitHub to be able to create a token for you to authenticate with AWS
+ contents: read  # Permits your action to read this repo.
+
+on:
+ push:
+   branches:
+     - main
+
+
+jobs:
+ deploy_stack:
+   runs-on: ubuntu-latest
+   steps:
+     - name: Checkout this repo
+       uses: actions/checkout@v3
+     - uses: actions/setup-node@v4
+       with:
+         node-version: 21
+
+     - name: Configure AWS credentials
+       uses: aws-actions/configure-aws-credentials@v2
+       with:
+         role-to-assume: arn:aws:iam::590183936486:role/OidcGithubActions
+         aws-region: ca-central-1
+         role-session-name: aws-dns-root
+
+     - name: Deploy via CDK
+       run: |
+         npm ci
+         npx cdk deploy
